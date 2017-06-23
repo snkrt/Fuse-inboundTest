@@ -9,7 +9,7 @@
     <jaxrs:server address="http://localhost:9191/cxf/demos"
         id="demoGraphicsService" staticSubresourceResolution="true">
         <jaxrs:serviceBeans>
-            <bean class="com.redhat.usecase.service.impl.ExampleBean"/>
+            <bean class="com.redhat.usecase.service.impl.demographicImpl"/>
         </jaxrs:serviceBeans>
     </jaxrs:server> 
     <!-- Defined the server endpoint to create the cxf-rs consumer -->

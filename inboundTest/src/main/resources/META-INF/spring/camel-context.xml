@@ -6,12 +6,12 @@
     xmlns:jaxrs="http://cxf.apache.org/jaxrs"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="     http://www.springframework.org/schema/beans      http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/cxf      http://camel.apache.org/schema/cxf/camel-cxf.xsd          http://camel.apache.org/schema/spring      http://camel.apache.org/schema/spring/camel-spring.xsd           http://cxf.apache.org/jaxrs      http://cxf.apache.org/schemas/jaxrs.xsd                        http://www.springframework.org/schema/osgi      http://www.springframework.org/schema/osgi/spring-osgi.xsd                        http://www.springframework.org/schema/context      http://www.springframework.org/schema/context/spring-context.xsd">
     <!-- Defined the real JAXRS back end service -->
-    <!--    <jaxrs:server address="http://localhost:9191/cxf/demos"
+    <jaxrs:server address="http://localhost:9191/cxf/demos"
         id="demoGraphicsService" staticSubresourceResolution="true">
         <jaxrs:serviceBeans>
             <bean class="com.redhat.usecase.service.impl.ExampleBean"/>
         </jaxrs:serviceBeans>
-    </jaxrs:server> -->
+    </jaxrs:server> 
     <!-- Defined the server endpoint to create the cxf-rs consumer -->
     <cxf:rsServer address="http://localhost:9190/cxf/demos"
         id="rsServer" loggingFeatureEnabled="true" serviceClass="com.redhat.usecase.service.impl.DEIMServiceImpl">
@@ -31,7 +31,7 @@
         class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider" id="jsonProvider"/>
     <!-- bean define -->
     <bean class="com.redhat.usecase.service.impl.DEIMServiceImpl" id="demographicImpl"/>
-    <bean class="com.redhat.usecase.service.impl.ExampleBean" id="ExampleBean"/>
+    <!--<bean class="com.redhat.usecase.service.impl.ExampleBean" id="ExampleBean"/>-->
     <!-- The camel route context -->
     <camel:camelContext id="restInbound" streamCache="true" trace="false">
         <camel:dataFormats>
@@ -52,7 +52,7 @@
         <camel:route id="addRoute">
             <camel:from id="_from2" uri="cxfrs:bean:rsClient"/>
             <camel:to id="_to2" uri="dataformat:jaxb:unmarshal?ref=personDataFormat"/>
-            <camel:bean id="_bean1" method="ping" ref="ExampleBean"/>
+            <camel:bean id="_bean1" method="ping" ref="demographicImpl"/>
             <camel:to id="_to4" pattern="InOnly" uri="activemq:queue:foo"/>
         </camel:route>
     </camel:camelContext>
